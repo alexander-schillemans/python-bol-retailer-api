@@ -3,9 +3,9 @@ import requests
 import json
 import time
 
-import config as config
-from cache import CacheHandler
-from models import OrderList, Order
+from . import config
+from .cache import CacheHandler
+from .models import OrderList, Order
 
 class APIEndpoint:
 

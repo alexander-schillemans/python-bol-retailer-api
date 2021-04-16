@@ -1,6 +1,6 @@
 from pathlib import Path
 
-import config as config
+from . import config
 
 class CacheHandler:
 
