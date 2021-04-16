@@ -11,14 +11,14 @@ setup(
   url = 'https://github.com/alexanderlhsglobal/python-bol-retailer-api',
   download_url = 'https://github.com/alexanderlhsglobal/python-bol-retailer-api/archive/refs/tags/v0.1.tar.gz',
   keywords = ['bol.com', 'api'],
-  install_requires=[            # I get to this in a second
+  install_requires=[
           'requests',
       ],
   classifiers=[
     'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
     'Topic :: Software Development :: Build Tools',
-    'License :: OSI Approved :: MIT License',   # Again, pick a license
+    'License :: OSI Approved :: GPL-3.0 License',
     'Programming Language :: Python :: 3.6',
   ],
 )
