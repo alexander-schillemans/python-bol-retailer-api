@@ -1,0 +1,5 @@
+bol/tests/
+bol/__pycache__/
+__pycache__/
+bol/cache/*
+!bol/cache/.silence
