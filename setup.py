@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(
-  name = 'bol',         
+  name = 'python-bol-retailer-api',         
   packages = ['bol'],
   version = '0.1',
   license='GPL-3.0-or-later',
