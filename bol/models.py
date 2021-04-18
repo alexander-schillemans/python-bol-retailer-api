@@ -48,6 +48,10 @@ class ObjectListModel:
     def getItemIndex(self, attribute, value):
         index = getIndexWithValue(self.list, attribute, value)
         return index
+    
+    def getItemObject(self, attribute, value):
+        object = getObjectWithValue(self.list, attribute, value)
+        return object
 
 
 class OrderList(ObjectListModel):
@@ -70,12 +74,13 @@ class Order(ObjectListModel):
     def __init__(self, 
         orderId=None, 
         billingDetails=None,
+        shipmentDetails=None,
     ):
         super(Order, self).__init__(list=[])
 
         self.orderId = orderId
-        self.billingDetails = billingDetails if billingDetails else BillingDetails()
-
+        self.billingDetails = billingDetails if billingDetails else CustomerDetails()
+        self.shipmentDetails = shipmentDetails if shipmentDetails else CustomerDetails()
 
     @property
     def orderItems(self):
@@ -93,13 +98,16 @@ class Order(ObjectListModel):
                 existingItem = self.getItemIndex('orderItemId', item['orderItemId'])
 
                 if existingItem:
-                    self.orderItems[index].parse(item)
+                    self.orderItems[index] = self.orderItems[index].parse(item)
                 else:
                     orderItem = OrderItem().parse(item)
                     self.addToList(orderItem)
 
         if 'billingDetails' in json:
             self.billingDetails.parse(json['billingDetails'])
+
+        if 'shipmentDetails' in json:
+            self.shipmentDetails.parse(json['shipmentDetails'])
 
         return self
 
@@ -128,7 +136,7 @@ class OrderItem(BaseModel):
         self.comission = comission
 
 
-class BillingDetails(BaseModel):
+class CustomerDetails(BaseModel):
 
     def __init__(self, 
         firstName=None, 
@@ -139,6 +147,7 @@ class BillingDetails(BaseModel):
         extraAdressInformation=None, 
         zipCode=None,
         city=None,
+        countryCode=None,
         email=None,
         company=None,
         vatNumber=None,
@@ -154,6 +163,7 @@ class BillingDetails(BaseModel):
         self.extraAdressInformation = extraAdressInformation
         self.zipCode = zipCode
         self.city = city
+        self.countryCode = countryCode
         self.email = email
         self.company = company
         self.vatNumber = vatNumber

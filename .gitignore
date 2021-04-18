@@ -1,4 +1,5 @@
 bol/tests/
+tests/
 bol/__pycache__/
 __pycache__/
 bol/cache/*
