@@ -3,7 +3,7 @@ tests/
 bol/__pycache__/
 __pycache__/
 bol/cache/*
-!bol/cache/SILENCE
+!bol/cache/__init__.py
 dist/
 Pipfile
 Pipfile.lock
