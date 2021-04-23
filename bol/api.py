@@ -4,7 +4,7 @@ import json
 import time
 
 from . import config
-from .cache import CacheHandler
+from .cachehandler import CacheHandler
 
 from .models.orders import OrderList, Order
 from .models.processes import ProcessStatus, ProcessLink
