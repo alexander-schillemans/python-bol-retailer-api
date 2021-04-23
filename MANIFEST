@@ -5,7 +5,7 @@ setup.cfg
 setup.py
 bol\__init__.py
 bol\api.py
-bol\cache.py
+bol\cachehandler.py
 bol\config.py
 bol\cache\__init__.py
 bol\constants\reasons.py

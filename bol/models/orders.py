@@ -4,6 +4,9 @@ from .transports import Transport
 
 class OrderList(ObjectListModel):
     
+    def __init__(self):
+        super(OrderList, self).__init__(list=[])
+
     @property
     def orders(self):
         return self.list
