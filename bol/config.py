@@ -1,4 +1,3 @@
-
 CACHE = {}
 BASE_URL = 'https://api.bol.com/retailer'
 DEMO_URL = 'https://api.bol.com/retailer-demo'

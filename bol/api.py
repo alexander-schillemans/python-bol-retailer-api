@@ -5,7 +5,11 @@ import time
 
 from . import config
 from .cache import CacheHandler
-from .models import OrderList, Order
+
+from .models.orders import OrderList, Order
+from .models.processes import ProcessStatus, ProcessLink
+
+from .constants.reasons import *
 
 class APIEndpoint:
 
@@ -35,6 +39,14 @@ class OrderMethods(APIEndpoint):
 
         status, respJson = self.api.get(url, data)
         return Order().parse(respJson)
+    
+    def cancelOrderItem(self, id, reason):
+        data = { 'orderItems' : [{ 'orderItemId' : id, 'reasonCode' : reason }]}
+
+        url = '{endpoint}/cancellation'.format(endpoint=self.endpoint)
+
+        status, respJson = self.api.put(url, data)
+        return ProcessStatus().parse(respJson)
 
 class BolAPI:
 
@@ -44,6 +56,7 @@ class BolAPI:
         self.clientSecret = clientSecret
         self.headers = {
             'Accept' : 'application/vnd.retailer.v5+json',
+            'Content-Type' : 'application/vnd.retailer.v5+json',
         }
 
         self.baseUrl = config.DEMO_URL if demo else config.BASE_URL
@@ -53,6 +66,7 @@ class BolAPI:
         self.rateLimitReset = None
 
         self.orders = OrderMethods(self)
+        self.reasons = Reasons()
     
     def setTokenHeader(self, token):
         bearerStr = 'Bearer {token}'.format(token=token)
@@ -83,6 +97,7 @@ class BolAPI:
         }
 
         req = requests.post(config.AUTH_URL, data=None, headers=credentialsHeader)
+      
         status = req.status_code
         response = req.json()
 
@@ -121,6 +136,8 @@ class BolAPI:
             response = requests.get(reqUrl, params=data, headers=headers)
         elif method == 'POST':
             response = requests.post(reqUrl, data=json.dumps(data), headers=headers)
+        elif method == 'PUT':
+            response = requests.put(reqUrl, data=json.dumps(data), headers=headers)
         
         return response
 
@@ -151,4 +168,8 @@ class BolAPI:
     
     def post(self, url, data=None, headers=None):
         status, response = self.request('POST', url, data, headers)
+        return status, response
+    
+    def put(self, url, data=None, headers=None):
+        status, response = self.request('PUT', url, data, headers)
         return status, response
