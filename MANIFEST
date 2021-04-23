@@ -7,4 +7,3 @@ bol\__init__.py
 bol\api.py
 bol\cache.py
 bol\config.py
-bol\models.py
