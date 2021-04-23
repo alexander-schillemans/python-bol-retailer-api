@@ -114,13 +114,13 @@ class Order(ObjectListModel):
 class OrderItem(BaseModel):
 
     def __init__(self, 
-        orderItemId=None, 
-        ean=None, 
+        orderItemId=None,
+        ean=None,
+        title=None,
         quantity=None, 
         quantityShipped=None, 
         quantityCancelled=None,
         cancellationRequest=None,
-        title=None, 
         unitPrice=None, 
         comission=None
     ):
@@ -135,6 +135,14 @@ class OrderItem(BaseModel):
         self.unitPrice = unitPrice
         self.comission = comission
 
+    def parse(self, json):
+        super(OrderItem, self).parse(json)
+
+        if 'product' in json:
+            self.ean = json['product']['ean']
+            self.title = json['product']['title']
+        
+        return self
 
 class CustomerDetails(BaseModel):
 
