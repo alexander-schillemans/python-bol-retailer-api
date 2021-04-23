@@ -10,6 +10,7 @@ from .models.orders import OrderList, Order
 from .models.processes import ProcessStatus, ProcessLink
 
 from .constants.reasons import *
+from .constants.transporters import *
 
 class APIEndpoint:
 
@@ -40,11 +41,43 @@ class OrderMethods(APIEndpoint):
         status, respJson = self.api.get(url, data)
         return Order().parse(respJson)
     
-    def cancelOrderItem(self, id, reason):
+    def cancelItem(self, id, reason):
         data = { 'orderItems' : [{ 'orderItemId' : id, 'reasonCode' : reason }]}
 
         url = '{endpoint}/cancellation'.format(endpoint=self.endpoint)
 
+        status, respJson = self.api.put(url, data)
+        return ProcessStatus().parse(respJson)
+    
+    def cancel(self, order, reason):
+
+        orderItems = []
+        for item in order.orderItems:
+            orderItems.append({ 'orderItemId' : item.orderItemId, 'reasonCode' : reason })
+
+        data = { 'orderItems' : orderItems }
+
+        url = '{endpoint}/cancellation'.format(endpoint=self.endpoint)
+
+        status, respJson = self.api.put(url, data)
+        return ProcessStatus().parse(respJson)
+    
+    def ship(self, order, shipmentReference=None, shippingLabelId=None, transporterCode=None, trackAndTrace=None):
+
+        orderItems = []
+        for item in order.orderItems:
+            orderItems.append({ 'orderItemId' : item.orderItemId })
+        
+        data = { 'orderItems' : orderItems }
+
+        if shipmentReference: data['shipmentReference'] = shipmentReference
+        if shippingLabelId: data['shippingLabelId'] = shippingLabelId
+        if transporterCode:
+            data['transport'] = { 'transporterCode' : transporterCode }
+            if trackAndTrace: data['transport']['trackAndTrace'] = trackAndTrace
+        
+        url = '{endpoint}/shipment'.format(endpoint=self.endpoint)
+        
         status, respJson = self.api.put(url, data)
         return ProcessStatus().parse(respJson)
 
@@ -66,7 +99,10 @@ class BolAPI:
         self.rateLimitReset = None
 
         self.orders = OrderMethods(self)
+
+
         self.reasons = Reasons()
+        self.transporters = Transporters()
     
     def setTokenHeader(self, token):
         bearerStr = 'Bearer {token}'.format(token=token)

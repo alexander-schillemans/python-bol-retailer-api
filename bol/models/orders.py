@@ -1,5 +1,7 @@
 from .base import ObjectListModel, BaseModel
 
+from .transports import Transport
+
 class OrderList(ObjectListModel):
     
     @property
@@ -55,6 +57,24 @@ class Order(ObjectListModel):
             self.shipmentDetails.parse(json['shipmentDetails'])
 
         return self
+
+class OrderShipment(ObjectListModel):
+
+    def __init__(self,
+        shipmentReference=None,
+        shippingLabelId=None,
+        transport=None
+    ):
+
+        super(OrderShipment, self).init__(list=[])
+
+        self.shipmentReference = shipmentReference
+        self.shippingLabelId= shippingLabelId
+        self.transport = transport if transport else Transport()
+    
+    @property
+    def orderItems(self):
+        return self.list
 
 class OrderItem(BaseModel):
 
