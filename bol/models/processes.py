@@ -26,7 +26,9 @@ class ProcessStatus(ObjectListModel):
         self.status = status
         self.errorMessage = errorMessage
         self.createTimestamp = createTimestamp
-        self.errors = False
+        
+        self.hasError = False
+        self.error = None
 
     @property
     def links(self):
@@ -55,4 +57,6 @@ class ProcessLink(BaseModel):
         self.rel = rel
         self.href = href
         self.method = method
-        self.errors = False
+        
+        self.hasError = False
+        self.error = None

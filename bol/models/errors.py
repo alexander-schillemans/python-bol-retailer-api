@@ -13,7 +13,6 @@ class Error(ObjectListModel):
 
         super(Error, self).__init__(list=[])
 
-        self.errors = True
         self.type = type
         self.title = title
         self.status = status
@@ -42,6 +41,6 @@ class Violation(BaseModel):
         name=None,
         reason=None
     ):
-        self.errors = True
+    
         self.name = name
         self.reason = reason

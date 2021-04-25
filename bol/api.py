@@ -40,7 +40,7 @@ class OrderMethods(APIEndpoint):
         data = None
 
         status, respJson = self.api.get(url, data)
-        if status == 404: return Error().parse(respJson)
+        if status == 404: return Order().parseError(respJson)
 
         return Order().parse(respJson)
     
@@ -50,7 +50,7 @@ class OrderMethods(APIEndpoint):
         url = '{endpoint}/cancellation'.format(endpoint=self.endpoint)
 
         status, respJson = self.api.put(url, data)
-        if status == 400: return Error().parse(respJson)
+        if status == 400: return ProcessStatus().parseError(respJson)
         
         return ProcessStatus().parse(respJson)
     
@@ -65,7 +65,7 @@ class OrderMethods(APIEndpoint):
         url = '{endpoint}/cancellation'.format(endpoint=self.endpoint)
 
         status, respJson = self.api.put(url, data)
-        if status == 400: return Error().parse(respJson)
+        if status == 400: return ProcessStatus().parseError(respJson)
 
         return ProcessStatus().parse(respJson)
     
@@ -82,11 +82,11 @@ class OrderMethods(APIEndpoint):
         if transporterCode:
             data['transport'] = { 'transporterCode' : transporterCode }
             if trackAndTrace: data['transport']['trackAndTrace'] = trackAndTrace
-        
+
         url = '{endpoint}/shipment'.format(endpoint=self.endpoint)
         
         status, respJson = self.api.put(url, data)
-        if status == 400: return Error().parse(respJson)
+        if status == 400: return ProcessStatus().parseError(respJson)
 
         return ProcessStatus().parse(respJson)
 

@@ -9,4 +9,6 @@ class Transport(BaseModel):
 
         self.transporterCode = transporterCode
         self.trackAndTrace = trackAndTrace
-        self.errors = False
+        
+        self.hasError = False
+        self.error = None

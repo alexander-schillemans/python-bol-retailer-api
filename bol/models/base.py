@@ -35,6 +35,15 @@ class BaseModel:
                 continue
         
         return self
+    
+    def parseError(self, json):
+
+        from .errors import Error
+        
+        self.hasError = True
+        self.error = Error().parse(json)
+
+        return self
 
 
 class ObjectListModel(BaseModel):
