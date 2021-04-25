@@ -99,7 +99,7 @@ class OrderItem(BaseModel):
         quantityCancelled=None,
         cancellationRequest=None,
         unitPrice=None, 
-        comission=None
+        commission=None
     ):
 
         self.orderItemId = orderItemId
@@ -110,7 +110,7 @@ class OrderItem(BaseModel):
         self.quantityShipped = quantityShipped
         self.quantityCancelled = quantityCancelled
         self.unitPrice = unitPrice
-        self.comission = comission
+        self.commission = commission
 
         self.hasError = False
         self.error = None
