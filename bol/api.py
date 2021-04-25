@@ -8,6 +8,7 @@ from .cachehandler import CacheHandler
 
 from .models.orders import OrderList, Order
 from .models.processes import ProcessStatus, ProcessLink
+from .models.errors import Error, Violation
 
 from .constants.reasons import *
 from .constants.transporters import *
@@ -39,6 +40,8 @@ class OrderMethods(APIEndpoint):
         data = None
 
         status, respJson = self.api.get(url, data)
+        if status == 404: return Error().parse(respJson)
+
         return Order().parse(respJson)
     
     def cancelItem(self, id, reason):
@@ -47,6 +50,8 @@ class OrderMethods(APIEndpoint):
         url = '{endpoint}/cancellation'.format(endpoint=self.endpoint)
 
         status, respJson = self.api.put(url, data)
+        if status == 400: return Error().parse(respJson)
+        
         return ProcessStatus().parse(respJson)
     
     def cancel(self, order, reason):
@@ -60,6 +65,8 @@ class OrderMethods(APIEndpoint):
         url = '{endpoint}/cancellation'.format(endpoint=self.endpoint)
 
         status, respJson = self.api.put(url, data)
+        if status == 400: return Error().parse(respJson)
+
         return ProcessStatus().parse(respJson)
     
     def ship(self, order, shipmentReference=None, shippingLabelId=None, transporterCode=None, trackAndTrace=None):
@@ -79,6 +86,8 @@ class OrderMethods(APIEndpoint):
         url = '{endpoint}/shipment'.format(endpoint=self.endpoint)
         
         status, respJson = self.api.put(url, data)
+        if status == 400: return Error().parse(respJson)
+
         return ProcessStatus().parse(respJson)
 
 class BolAPI:

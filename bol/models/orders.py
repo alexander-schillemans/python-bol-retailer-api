@@ -7,6 +7,8 @@ class OrderList(ObjectListModel):
     def __init__(self):
         super(OrderList, self).__init__(list=[])
 
+        self.errors = False
+
     @property
     def orders(self):
         return self.list
@@ -31,6 +33,7 @@ class Order(ObjectListModel):
         self.orderId = orderId
         self.billingDetails = billingDetails if billingDetails else CustomerDetails()
         self.shipmentDetails = shipmentDetails if shipmentDetails else CustomerDetails()
+        self.errors = False
 
     @property
     def orderItems(self):
@@ -74,6 +77,7 @@ class OrderShipment(ObjectListModel):
         self.shipmentReference = shipmentReference
         self.shippingLabelId= shippingLabelId
         self.transport = transport if transport else Transport()
+        self.errors = False
     
     @property
     def orderItems(self):
@@ -102,6 +106,7 @@ class OrderItem(BaseModel):
         self.quantityCancelled = quantityCancelled
         self.unitPrice = unitPrice
         self.comission = comission
+        self.errors = False
 
     def parse(self, json):
         super(OrderItem, self).parse(json)
@@ -145,3 +150,4 @@ class CustomerDetails(BaseModel):
         self.vatNumber = vatNumber
         self.kvkNumber = kvkNumber
         self.orderReference = orderReference
+        self.errors = False
