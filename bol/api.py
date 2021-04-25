@@ -44,8 +44,8 @@ class OrderMethods(APIEndpoint):
 
         return Order().parse(respJson)
     
-    def cancelItem(self, id, reason):
-        data = { 'orderItems' : [{ 'orderItemId' : id, 'reasonCode' : reason }]}
+    def cancelItem(self, item, reason):
+        data = { 'orderItems' : [{ 'orderItemId' : item.orderItemid, 'reasonCode' : reason }]}
 
         url = '{endpoint}/cancellation'.format(endpoint=self.endpoint)
 
@@ -56,26 +56,16 @@ class OrderMethods(APIEndpoint):
     
     def cancel(self, order, reason):
 
-        orderItems = []
+        processStatuses = []
+
         for item in order.orderItems:
-            orderItems.append({ 'orderItemId' : item.orderItemId, 'reasonCode' : reason })
+            processStatus = self.cancelItem(item, reason)
+            processStatuses.append(processStatus)
 
-        data = { 'orderItems' : orderItems }
-
-        url = '{endpoint}/cancellation'.format(endpoint=self.endpoint)
-
-        status, respJson = self.api.put(url, data)
-        if status == 400: return ProcessStatus().parseError(respJson)
-
-        return ProcessStatus().parse(respJson)
+        return processStatuses
     
-    def ship(self, order, shipmentReference=None, shippingLabelId=None, transporterCode=None, trackAndTrace=None):
-
-        orderItems = []
-        for item in order.orderItems:
-            orderItems.append({ 'orderItemId' : item.orderItemId })
-        
-        data = { 'orderItems' : orderItems }
+    def shipItem(self, item, shipmentReference=None, shippingLabelId=None, transporterCode=None, trackAndTrace=None):
+        data = { 'orderItems' : [{ 'orderItemId' : item.orderItemId }] }
 
         if shipmentReference: data['shipmentReference'] = shipmentReference
         if shippingLabelId: data['shippingLabelId'] = shippingLabelId
@@ -89,6 +79,17 @@ class OrderMethods(APIEndpoint):
         if status == 400: return ProcessStatus().parseError(respJson)
 
         return ProcessStatus().parse(respJson)
+
+    def ship(self, order, shipmentReference=None, shippingLabelId=None, transporterCode=None, trackAndTrace=None):
+
+        processStatuses = []
+
+        for item in order.orderItems:
+            processStatus = self.shipItem(item, shipmentReference, shippingLabelId, transporterCode, trackAndTrace)
+            processStatuses.append(processStatus)
+
+        return processStatuses
+
 
 class BolAPI:
 
