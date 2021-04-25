@@ -1,7 +1,7 @@
 from .base import APIEndpoint
 
-from .models.orders import OrderList, Order
-from .models.processes import ProcessStatus
+from bol.models.orders import OrderList, Order
+from bol.models.processes import ProcessStatus
 
 class OrderMethods(APIEndpoint):
 
