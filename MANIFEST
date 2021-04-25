@@ -10,6 +10,9 @@ bol\config.py
 bol\cache\__init__.py
 bol\constants\reasons.py
 bol\constants\transporters.py
+bol\endpoints\__init__.py
+bol\endpoints\base.py
+bol\endpoints\orders.py
 bol\models\__init__.py
 bol\models\base.py
 bol\models\errors.py
