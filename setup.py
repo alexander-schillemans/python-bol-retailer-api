@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
   name = 'python-bol-retailer-api',         
-  packages=['bol', 'bol.models', 'bol.constants', 'bol.cache'],
+  packages=['bol', 'bol.models', 'bol.constants', 'bol.cache', 'bol.endpoints'],
   version = '0.3.0',
   license='GPL-3.0-or-later',
   description = 'Wrapper for the bol.com Retailer API (v5)',
