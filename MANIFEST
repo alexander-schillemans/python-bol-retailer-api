@@ -12,6 +12,7 @@ bol\constants\reasons.py
 bol\constants\transporters.py
 bol\models\__init__.py
 bol\models\base.py
+bol\models\errors.py
 bol\models\orders.py
 bol\models\processes.py
 bol\models\transports.py
