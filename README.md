@@ -27,7 +27,9 @@ Access token is automatically stored for later use. In the event that an access 
 
 The API keeps in account the rate limits that bol.com apply. In the event that the rate limit is almost exhausted within a timeframe, the API will stall until a new timeframe with new rate limits is available.
 
-### Get all orders
+### Orders
+
+#### Get all orders
 
 By default all orders will be returned
 
@@ -48,7 +50,7 @@ You can loop over the orders like so:
      for item in order.orderItems:
           print(item.orderItemId)
           
-### Get specific order
+#### Get specific order
 
 To get more info about an order, you can get the specific details of an order by its ID.
 
@@ -56,3 +58,22 @@ To get more info about an order, you can get the specific details of an order by
 
 This will return an Order object.
           
+#### Ship an order
+
+There are two ways to ship an order: you either ship an item of the order, or you ship the whole order at once.
+When shipping an item, an OrderItem object is expected. When shipping an order, an Order object is expected.
+Optionally you can add the shipmentReference, shippingLabelId, transporterCode and trackAndTrace. Consult the Bol documentation to know what is expected.
+
+There is a list of transportercodes that you can use.
+
+    api.orders.shipItem(item, transporterCode=api.transporters.GLS, trackAndTrace='XXXXXX')
+    api.orders.ship(order, transporterCode=api.transporters.UPS, trackAndTrace='XXXXXX')
+   
+#### Cancel an order
+
+There are two ways to cancel an order: you either cancel an item of the order, or you cancel the whole order at once.
+when cancelling an item, an OrderItem object is expected. When cancelling an order, an Order object is expected.
+A cancellation expects a reason for the cancellation. There is a list of reasons that you can use.
+
+    api.orders.cancelItem(item, reason=api.reasons.OUT_OF_STOCK)
+    api.orders.cancel(order, reason=api.reasons.NOT_AVAIL_IN_TIME)
