@@ -10,6 +10,7 @@ from .constants.reasons import *
 from .constants.transporters import *
 
 from .endpoints.orders import OrderMethods
+from .endpoints.shippinglabels import ShippingLabelMethods
 
 
 class BolAPI:
@@ -18,6 +19,7 @@ class BolAPI:
 
         self.clientId = clientId
         self.clientSecret = clientSecret
+        self.demo = demo
         self.headers = {
             'Accept' : 'application/vnd.retailer.v5+json',
             'Content-Type' : 'application/vnd.retailer.v5+json',
@@ -30,7 +32,7 @@ class BolAPI:
         self.rateLimitReset = None
 
         self.orders = OrderMethods(self)
-
+        self.shippingLabels = ShippingLabelMethods(self)
 
         self.reasons = Reasons()
         self.transporters = Transporters()
@@ -94,7 +96,10 @@ class BolAPI:
 
     def doRequest(self, method, url, data=None, headers=None):
 
-        if headers: headers.update(self.headers)
+        if headers:
+            mergedHeaders = self.headers
+            mergedHeaders.update(headers)
+            headers = mergedHeaders
         else: headers = self.headers
 
         reqUrl = '{base}/{url}'.format(base=self.baseUrl, url=url)
@@ -123,20 +128,25 @@ class BolAPI:
             self.acquireAccessToken()
 
             response = self.doRequest(method, url, data, headers)
-        
+
         # Check the rate remaining, delay if necessary
         self.checkRateLimits(response)
+
+        if 'json' in response.headers['Content-Type']:
+            respContent = response.json()
+        elif 'pdf' in response.headers['Content-Type']:
+            respContent = response.content
         
-        return response.status_code, response.json()
+        return response.status_code, response.headers, respContent
     
     def get(self, url, data=None, headers=None):
-        status, response = self.request('GET', url, data, headers)
-        return status, response
+        status, headers, response = self.request('GET', url, data, headers)
+        return status, headers, response
     
     def post(self, url, data=None, headers=None):
-        status, response = self.request('POST', url, data, headers)
-        return status, response
+        status, headers, content, response = self.request('POST', url, data, headers)
+        return status, headers, response
     
     def put(self, url, data=None, headers=None):
-        status, response = self.request('PUT', url, data, headers)
-        return status, response
+        status, headers, content, response = self.request('PUT', url, data, headers)
+        return status, headers, response
