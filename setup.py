@@ -9,7 +9,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 setup(
   name = 'python-bol-retailer-api',         
   packages=['bol', 'bol.models', 'bol.constants', 'bol.cache', 'bol.endpoints'],
-  version = '0.4.0',
+  version = '0.4.1',
   license='GPL-3.0-or-later',
   description = 'Wrapper for the bol.com Retailer API (v5)',
   long_description=long_description,
@@ -17,7 +17,7 @@ setup(
   author = 'Alexander Schillemans',
   author_email = 'alexander.schillemans@lhs.global',
   url = 'https://github.com/alexanderlhsglobal/python-bol-retailer-api',
-  download_url = 'https://github.com/alexanderlhsglobal/python-bol-retailer-api/archive/refs/tags/v0.4.0.tar.gz',
+  download_url = 'https://github.com/alexanderlhsglobal/python-bol-retailer-api/archive/refs/tags/v0.4.1.tar.gz',
   keywords = ['bol.com', 'api', 'bol', 'wrapper'],
   install_requires=[
           'requests',
