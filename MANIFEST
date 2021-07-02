@@ -13,9 +13,11 @@ bol\constants\transporters.py
 bol\endpoints\__init__.py
 bol\endpoints\base.py
 bol\endpoints\orders.py
+bol\endpoints\shippinglabels.py
 bol\models\__init__.py
 bol\models\base.py
 bol\models\errors.py
 bol\models\orders.py
 bol\models\processes.py
+bol\models\shippinglabels.py
 bol\models\transports.py

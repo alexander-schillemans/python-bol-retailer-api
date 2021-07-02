@@ -21,6 +21,7 @@ setup(
   keywords = ['bol.com', 'api', 'bol', 'wrapper'],
   install_requires=[
           'requests',
+          'python-dateutil',
       ],
   classifiers=[
     'Development Status :: 3 - Alpha',

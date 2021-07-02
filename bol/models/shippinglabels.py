@@ -1,3 +1,6 @@
+from datetime import datetime
+from dateutil.parser import parse as dateParser
+
 from .base import ObjectListModel, BaseModel
 
 from .transports import Transport
@@ -84,6 +87,8 @@ class DeliveryOption(BaseModel):
         
         if 'handoverDetails' in json:
             self.handoverDetails = HandoverDetails().parse(json['handoverDetails'])
+        
+        if self.validUntilDate: self.validUntilDate = datetime.strptime(self.validUntilDate, '%Y-%m-%d')
 
         return self
 
@@ -130,3 +135,8 @@ class HandoverDetails(BaseModel):
 
         self.hasError = False
         self.error = None
+    
+    def parse(self, json):
+        super(HandoverDetails, self).parse(json)
+        if self.latestHandoverDateTime: self.latestHandoverDateTime = dateParser(self.latestHandoverDateTime)
+        return self
