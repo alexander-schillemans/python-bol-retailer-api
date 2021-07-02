@@ -144,9 +144,9 @@ class BolAPI:
         return status, headers, response
     
     def post(self, url, data=None, headers=None):
-        status, headers, content, response = self.request('POST', url, data, headers)
+        status, headers, response = self.request('POST', url, data, headers)
         return status, headers, response
     
     def put(self, url, data=None, headers=None):
-        status, headers, content, response = self.request('PUT', url, data, headers)
+        status, headers, response = self.request('PUT', url, data, headers)
         return status, headers, response
