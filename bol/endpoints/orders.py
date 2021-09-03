@@ -14,6 +14,7 @@ class OrderMethods(APIEndpoint):
         url = self.endpoint
 
         status, headers, respJson = self.api.get(url, data)
+        print(respJson)
         if status == 400: return OrderList().parseError(respJson)
 
         return OrderList().parse(respJson)
@@ -29,7 +30,7 @@ class OrderMethods(APIEndpoint):
         return Order().parse(respJson)
     
     def cancelItem(self, item, reason):
-        data = { 'orderItems' : [{ 'orderItemId' : item.orderItemid, 'reasonCode' : reason }]}
+        data = { 'orderItems' : [{ 'orderItemId' : item.orderItemId, 'reasonCode' : reason }]}
 
         url = '{endpoint}/cancellation'.format(endpoint=self.endpoint)
 
