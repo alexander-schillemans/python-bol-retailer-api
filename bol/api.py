@@ -11,6 +11,7 @@ from .constants.transporters import *
 
 from .endpoints.orders import OrderMethods
 from .endpoints.shippinglabels import ShippingLabelMethods
+from .endpoints.processes import ProcessMethods
 
 
 class BolAPI:
@@ -33,6 +34,7 @@ class BolAPI:
 
         self.orders = OrderMethods(self)
         self.shippingLabels = ShippingLabelMethods(self)
+        self.processes = ProcessMethods(self)
 
         self.reasons = Reasons()
         self.transporters = Transporters()
@@ -86,6 +88,8 @@ class BolAPI:
         if 'X-RateLimit-Reset' in headers:
             self.rateLimitReset = int(headers['X-RateLimit-Reset'])
 
+        print('rate limit remaining: ', self.rateLimitRemaining)
+        print('rate limit reset: ', self.rateLimitReset)
 
         # If we only have one request or less remaining, delay until the limit is reset
         if self.rateLimitRemaining <= 1:
