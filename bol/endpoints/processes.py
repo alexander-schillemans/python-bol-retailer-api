@@ -17,4 +17,4 @@ class ProcessMethods(APIEndpoint):
         status, headers, respContent = self.api.get(url, data)
         if status == 400: return ProcessStatus().parseError(respContent)
 
-        return ProcessStatus().parse(headers, respContent)
+        return ProcessStatus().parse(respContent)
