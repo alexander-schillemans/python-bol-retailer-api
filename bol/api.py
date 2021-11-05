@@ -95,6 +95,7 @@ class BolAPI:
         if self.rateLimitRemaining <= 1:
             currentMil = time.time() * 1000
             waitingMil = self.rateLimitReset - currentMil
+            if waitingMil <= 0: waitingMil = 1000
 
             time.sleep(waitingMil/1000)
 

@@ -7,3 +7,4 @@ bol/cache/*
 dist/
 Pipfile
 Pipfile.lock
+python_bol_retailer_api.egg-info/
