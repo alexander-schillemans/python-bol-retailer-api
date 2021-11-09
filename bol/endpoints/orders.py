@@ -14,7 +14,6 @@ class OrderMethods(APIEndpoint):
         url = self.endpoint
 
         status, headers, respJson = self.api.get(url, data)
-        print(respJson)
         if status == 400: return OrderList().parseError(respJson)
 
         return OrderList().parse(respJson)

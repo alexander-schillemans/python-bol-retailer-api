@@ -87,10 +87,7 @@ class BolAPI:
         
         if 'X-RateLimit-Reset' in headers:
             self.rateLimitReset = int(headers['X-RateLimit-Reset'])
-
-        print('rate limit remaining: ', self.rateLimitRemaining)
-        print('rate limit reset: ', self.rateLimitReset)
-
+        
         # If we only have one request or less remaining, delay until the limit is reset
         if self.rateLimitRemaining <= 1:
             currentMil = time.time() * 1000

@@ -9,7 +9,7 @@ class ProcessMethods(APIEndpoint):
 
     def get(self, id):
 
-        if self.api.demo: id = 'c628ba4f-f31a-4fac-a6a0-062326d0dbbd'
+        if self.api.demo: id = '2'
 
         url = '{endpoint}/{id}'.format(endpoint=self.endpoint, id=id)
         data = None
