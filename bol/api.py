@@ -26,6 +26,11 @@ class BolAPI:
             'Content-Type' : 'application/vnd.retailer.v5+json',
         }
 
+        self.editHeaders = {
+            'Accept' : 'application/vnd.retailer.v5+json',
+            'Content-Type' : 'application/vnd.retailer.v5+json',
+        }
+
         self.baseUrl = config.DEMO_URL if demo else config.BASE_URL
         self.cacheHandler = CacheHandler()
 
@@ -84,6 +89,8 @@ class BolAPI:
 
         if 'X-RateLimit-Remaining' in headers:
             self.rateLimitRemaining = int(headers['X-RateLimit-Remaining'])
+        else:
+            self.rateLimitRemaining = 2
         
         if 'X-RateLimit-Reset' in headers:
             self.rateLimitReset = int(headers['X-RateLimit-Reset'])
@@ -97,12 +104,12 @@ class BolAPI:
             time.sleep(waitingMil/1000)
 
     def doRequest(self, method, url, data=None, headers=None):
-
+        
         if headers:
-            mergedHeaders = self.headers
+            mergedHeaders = self.editHeaders
             mergedHeaders.update(headers)
             headers = mergedHeaders
-        else: headers = self.headers
+        else: headers = self.editHeaders
 
         reqUrl = '{base}/{url}'.format(base=self.baseUrl, url=url)
 
@@ -113,6 +120,8 @@ class BolAPI:
         elif method == 'PUT':
             response = requests.put(reqUrl, data=json.dumps(data), headers=headers)
         
+        self.editHeaders = self.headers
+
         return response
 
 
