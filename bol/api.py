@@ -26,10 +26,6 @@ class BolAPI:
             'Content-Type' : 'application/vnd.retailer.v5+json',
         }
 
-        self.editHeaders = {
-            'Accept' : 'application/vnd.retailer.v5+json',
-            'Content-Type' : 'application/vnd.retailer.v5+json',
-        }
 
         self.baseUrl = config.DEMO_URL if demo else config.BASE_URL
         self.cacheHandler = CacheHandler()
@@ -106,10 +102,10 @@ class BolAPI:
     def doRequest(self, method, url, data=None, headers=None):
         
         if headers:
-            mergedHeaders = self.editHeaders
+            mergedHeaders = self.headers.copy()
             mergedHeaders.update(headers)
             headers = mergedHeaders
-        else: headers = self.editHeaders
+        else: headers = self.headers
 
         reqUrl = '{base}/{url}'.format(base=self.baseUrl, url=url)
 
@@ -119,8 +115,6 @@ class BolAPI:
             response = requests.post(reqUrl, data=json.dumps(data), headers=headers)
         elif method == 'PUT':
             response = requests.put(reqUrl, data=json.dumps(data), headers=headers)
-        
-        self.editHeaders = self.headers
 
         return response
 
