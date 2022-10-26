@@ -1,5 +1,5 @@
 # python-bol-retailer-api
-Wrapper for the bol.com Retailer API (v5)
+Wrapper for the bol.com Retailer API (v7)
 
 ## Install
 This package is published on PyPi: https://pypi.org/project/python-bol-retailer-api/
