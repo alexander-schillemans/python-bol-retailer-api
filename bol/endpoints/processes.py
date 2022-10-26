@@ -11,10 +11,10 @@ class ProcessMethods(APIEndpoint):
 
         if self.api.demo: id = '2'
 
-        url = '{endpoint}/{id}'.format(endpoint=self.endpoint, id=id)
+        url = '{sharedUrl}/{endpoint}/{id}'.format(sharedUrl=self.api.sharedUrl, endpoint=self.endpoint, id=id)
         data = None
 
-        status, headers, respContent = self.api.get(url, data)
+        status, headers, respContent = self.api.get(url, data, overwriteURL=True)
         if status == 400: return ProcessStatus().parseError(respContent)
 
         return ProcessStatus().parse(respContent)

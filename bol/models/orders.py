@@ -54,7 +54,7 @@ class Order(ObjectListModel):
                 existingItem = self.getItemIndex('orderItemId', item['orderItemId'])
 
                 if existingItem:
-                    self.orderItems[index] = self.orderItems[index].parse(item)
+                    self.orderItems[existingItem] = self.orderItems[existingItem].parse(item)
                 else:
                     orderItem = OrderItem().parse(item)
                     self.addToList(orderItem)

@@ -57,17 +57,21 @@ class DeliveryOption(BaseModel):
 
     def __init__(self,
         shippingLabelOfferId=None,
+        recommended=None,
         validUntilDate=None,
         transporterCode=None,
         labelType=None,
+        labelDisplayName=None,
         labelPrice=None,
         packageRestrictions=None,
         handoverDetails=None,
     ):
 
         self.shippingLabelOfferId = shippingLabelOfferId
+        self.recommended = recommended
         self.validUntilDate = validUntilDate
         self.transporterCode = transporterCode
+        self.labelDisplayName = labelDisplayName
         self.labelType = labelType
         self.labelPrice = labelPrice if labelPrice else LabelPrice()
         self.packageRestrictions = packageRestrictions if packageRestrictions else PackageRestrictions()

@@ -48,10 +48,10 @@ class OrderMethods(APIEndpoint):
 
         return processStatuses
     
-    def shipItem(self, item, shipmentReference=None, shippingLabelId=None, transporterCode=None, trackAndTrace=None):
+    def shipItem(self, item, shipmentReference, shippingLabelId=None, transporterCode=None, trackAndTrace=None):
         data = { 'orderItems' : [{ 'orderItemId' : item.orderItemId }] }
 
-        if shipmentReference: data['shipmentReference'] = shipmentReference
+        data['shipmentReference'] = shipmentReference
         if shippingLabelId: data['shippingLabelId'] = shippingLabelId
         if transporterCode:
             data['transport'] = { 'transporterCode' : transporterCode }
@@ -64,7 +64,7 @@ class OrderMethods(APIEndpoint):
 
         return ProcessStatus().parse(respJson)
 
-    def ship(self, order, shipmentReference=None, shippingLabelId=None, transporterCode=None, trackAndTrace=None):
+    def ship(self, order, shipmentReference, shippingLabelId=None, transporterCode=None, trackAndTrace=None):
 
         processStatuses = []
 

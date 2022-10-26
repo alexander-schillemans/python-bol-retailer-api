@@ -22,12 +22,13 @@ class BolAPI:
         self.clientSecret = clientSecret
         self.demo = demo
         self.headers = {
-            'Accept' : 'application/vnd.retailer.v5+json',
-            'Content-Type' : 'application/vnd.retailer.v5+json',
+            'Accept' : 'application/vnd.retailer.v7+json',
+            'Content-Type' : 'application/vnd.retailer.v7+json',
         }
 
 
         self.baseUrl = config.DEMO_URL if demo else config.BASE_URL
+        self.sharedUrl = config.SHARED_DEMO_URL if demo else config.SHARED_URL
         self.cacheHandler = CacheHandler()
 
         self.rateLimitRemaining = None
@@ -99,7 +100,7 @@ class BolAPI:
 
             time.sleep(waitingMil/1000)
 
-    def doRequest(self, method, url, data=None, headers=None):
+    def doRequest(self, method, url, data=None, headers=None, overwriteURL=False):
         
         if headers:
             mergedHeaders = self.headers.copy()
@@ -107,7 +108,10 @@ class BolAPI:
             headers = mergedHeaders
         else: headers = self.headers
 
-        reqUrl = '{base}/{url}'.format(base=self.baseUrl, url=url)
+        if overwriteURL:
+            reqUrl = url
+        else:
+            reqUrl = '{base}/{url}'.format(base=self.baseUrl, url=url)
 
         if method == 'GET':
             response = requests.get(reqUrl, params=data, headers=headers)
@@ -119,13 +123,13 @@ class BolAPI:
         return response
 
 
-    def request(self, method, url, data=None, headers=None):
+    def request(self, method, url, data=None, headers=None, overwriteURL=False):
         
         # Check the headers for appropriate tokens before we make a request
         self.checkHeaderTokens()
 
         # Make the request
-        response = self.doRequest(method, url, data, headers)
+        response = self.doRequest(method, url, data, headers, overwriteURL)
         
         # Check if request has been carried out
         # If request has been blocked due to token expiration, get a new one and redo the request
@@ -144,14 +148,14 @@ class BolAPI:
         
         return response.status_code, response.headers, respContent
     
-    def get(self, url, data=None, headers=None):
-        status, headers, response = self.request('GET', url, data, headers)
+    def get(self, url, data=None, headers=None, overwriteURL=False):
+        status, headers, response = self.request('GET', url, data, headers, overwriteURL)
         return status, headers, response
     
-    def post(self, url, data=None, headers=None):
-        status, headers, response = self.request('POST', url, data, headers)
+    def post(self, url, data=None, headers=None, overwriteURL=False):
+        status, headers, response = self.request('POST', url, data, headers, overwriteURL)
         return status, headers, response
     
-    def put(self, url, data=None, headers=None):
-        status, headers, response = self.request('PUT', url, data, headers)
+    def put(self, url, data=None, headers=None, overwriteURL=False):
+        status, headers, response = self.request('PUT', url, data, headers, overwriteURL)
         return status, headers, response

@@ -33,7 +33,7 @@ class ShippingLabelMethods(APIEndpoint):
         data = None
 
         labelHeaders = {
-            'Accept' : 'application/vnd.retailer.v5+pdf',
+            'Accept' : 'application/vnd.retailer.v7+pdf',
             'Content-Type' : '',
         }
 
