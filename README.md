@@ -7,8 +7,11 @@ Wrapper for the bol.com Retailer API (v7)
 v1.0.0 has breaking changes compared to v0.5.5
 - When shipping an order or item using ```api.orders.shipItem``` or ```api.orders.ship```, shipmentReference is **required** and has to be passed as the second argument to the function.
 
-    api.orders.shipItem(item, shipmentReference, transporterCode=api.transporters.GLS, trackAndTrace='XXXXXX')
-    api.orders.ship(order, shipmentReference, transporterCode=api.transporters.UPS, trackAndTrace='XXXXXX')
+
+    ```
+        api.orders.shipItem(item, shipmentReference, transporterCode=api.transporters.GLS, trackAndTrace='XXXXXX')
+        api.orders.ship(order, shipmentReference, transporterCode=api.transporters.UPS, trackAndTrace='XXXXXX')
+    ```
 
 ## Install
 This package is published on PyPi: https://pypi.org/project/python-bol-retailer-api/
