@@ -22,8 +22,8 @@ class BolAPI:
         self.clientSecret = clientSecret
         self.demo = demo
         self.headers = {
-            'Accept' : 'application/vnd.retailer.v7+json',
-            'Content-Type' : 'application/vnd.retailer.v7+json',
+            'Accept' : 'application/vnd.retailer.v10+json',
+            'Content-Type' : 'application/vnd.retailer.v10+json',
         }
 
 

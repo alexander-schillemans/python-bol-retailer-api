@@ -1,5 +1,5 @@
 # python-bol-retailer-api
-Wrapper for the bol.com Retailer API (v7)
+Wrapper for the bol.com Retailer API (v10)
 
 
 ## Breaking changes
