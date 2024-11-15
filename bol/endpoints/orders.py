@@ -57,7 +57,7 @@ class OrderMethods(APIEndpoint):
             data['transport'] = { 'transporterCode' : transporterCode }
             if trackAndTrace: data['transport']['trackAndTrace'] = trackAndTrace
 
-        url = '{baseUrl}/{shipments}'.format(baseUrl=self.api.baseUrl, endpoint=self.endpoint, id=id)
+        url = '{baseUrl}/shipments'.format(baseUrl=self.api.baseUrl, endpoint=self.endpoint, id=id)
         
         status, headers, respJson = self.api.post(url, data, overwriteURL=True)
         if status == 400: return ProcessStatus().parseError(respJson)
